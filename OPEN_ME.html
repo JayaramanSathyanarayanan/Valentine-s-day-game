@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Special</title>
+    <link rel="icon" href="DONT_OPEN_THIS_FOLDER!!!/1.webp">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Acme&family=Archivo:ital,wght@0,100..900;1,100..900&family=Love+Light&family=Lovers+Quarrel&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #382122, #8f5b4c);
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            background: url('DONT_OPEN_THIS_FOLDER!!!/multiple1.jpg') no-repeat center center/cover;
+        }
+
+        .container {
+            position: relative;
+            background: rgb(139, 116, 188);
+            background-image: url('DONT_OPEN_THIS_FOLDER!!!/l.png'); 
+            background-size: cover; 
+            background-position: center; 
+            padding: 30px;
+            border-radius: 35px;
+            box-shadow: 0 4px 10px rgba(64, 29, 160, 0.2);
+            width: 300px;
+            height: 200px;
+        }
+
+        h2 {
+            color: #080808;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .button-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 25px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .button-img:active {
+            transform: scale(0.9);
+        }
+
+        #noBtn {
+            border: 2px solid #000000;
+            position: relative;
+            transition: left 0.5s ease-in-out, top 0.5s ease-in-out;
+        }
+
+        .title {
+            font-family: "Prompt", serif;
+        }
+
+        #yesBtn {
+            border: 2px solid #080808;
+        }
+
+        .counter {
+            margin-top: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            position: absolute;
+            transition: left 0.5s ease-in-out, top 0.5s ease-in-out;
+        }
+
+        .meta-logo {
+            position: fixed;
+            bottom: 20px;
+        }
+
+        .meta {
+            height: 40px;
+        }
+
+        
+        .loading-screen {
+            display: none;
+            background: #000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .insta {
+            width: 90px;
+            height: 90px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div id="page1">
+        <div class="container">
+            <h2 id="title" class="title">Will you be my Valentine?</h2>
+            <div class="buttons">
+                <div class="button-container">
+                    <img id="yesBtn" class="button-img" src="DONT_OPEN_THIS_FOLDER!!!/l1 copy.gif" onclick="increaseYes()" alt="Yes">
+                    <span class="counter" id="yesCount">Yes</span>
+                </div>
+                <div class="button-container" id="noContainer">
+                    <img id="noBtn" class="button-img" src="DONT_OPEN_THIS_FOLDER!!!/s14.gif" onclick="increaseNo()" alt="No">
+                    <span class="counter" id="noCount"><center>No</center></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gifImages = ["DONT_OPEN_THIS_FOLDER!!!/s2.gif", "DONT_OPEN_THIS_FOLDER!!!/s3.gif", "DONT_OPEN_THIS_FOLDER!!!/s4.gif","DONT_OPEN_THIS_FOLDER!!!/s6.gif","DONT_OPEN_THIS_FOLDER!!!/s8.gif","DONT_OPEN_THIS_FOLDER!!!/s9.gif","DONT_OPEN_THIS_FOLDER!!!/s10.gif","DONT_OPEN_THIS_FOLDER!!!/s11.gif","DONT_OPEN_THIS_FOLDER!!!/sadl.gif"];
+        const headings = [
+    "Are you sure?🙁",
+    "Really?☹️",
+    "Think again!😣",
+    "Last chance!😖",
+    "Still saying no?😫",
+    "I’m getting sad...😭",
+    "Don't break my heart 💔",
+    "Come on, just say yes! 🥺",
+    "My heart is waiting... ❤️",
+    "You’re breaking my soul! 💔😢",
+    "Even the stars want you to say yes! ✨🥰",
+    "No? But why? 😭",
+    "I'll cry if you keep saying no... 😢💔",
+    "You're making me nervous! 😰",
+    "Please don’t do this to me! 🥺💘",
+    "You don’t really mean no... right? 👀💖",
+    "Imagine how cute we’d be together! 🥰💑",
+    "If you say no, I might just vanish... 😶💔",
+    "A ‘no’ would break my heart into pieces! 💔😩",
+    "What if I give you chocolate? 🍫👀",
+    "Cupid will be so disappointed! 🏹😢",
+    "Think of the love songs we could dance to! 🎶💃",
+    "You’re too cute to say no! 😘💕"
+];
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function increaseYes() {
+            document.getElementById("yesCount").innerText = `Yes`;
+            openLovePage();
+        }
+
+        function increaseNo() {
+            document.getElementById("noCount").innerText = `No`;
+            moveBox();
+
+            
+            document.getElementById("noBtn").src = getRandomItem(gifImages);
+            document.getElementById("title").innerText = getRandomItem(headings);
+        }
+
+        function moveBox() {
+            const noBtn = document.getElementById("noBtn");
+            const noCount = document.getElementById("noCount");
+
+            let x = (Math.random() - 0.5) * 600; 
+            let y = (Math.random() - 0.5) * 600;
+
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noCount.style.left = `${x + 20}px`;  
+            noCount.style.top = `${y + 85}px`;  
+        }
+
+        function openLovePage() {
+            document.body.innerHTML = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Instagram</title>
+                    <link rel="icon" href="DONT_OPEN_THIS_FOLDER!!!/Insta.png">
+                    <style>
+                        body {
+                            background: #000;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 90vh;
+                            flex-direction: column;
+                            position: relative;
+                        }
+
+                        .insta {
+                            width: 90px;
+                            height: 90px;
+                        }
+
+                        .meta-logo {
+                            position: fixed;
+                            bottom: 20px;
+                        }
+
+                        .meta {
+                            height: 40px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="insta-logo">
+                        <img class="insta" src="DONT_OPEN_THIS_FOLDER!!!/insta.png" alt="">
+                    </div>
+
+                    <div class="meta-logo">
+                        <img class="meta" src="DONT_OPEN_THIS_FOLDER!!!/download.png" alt="">
+                    </div>
+                </body>
+                </html>
+            `;
+            setTimeout(() => {
+            let a = document.createElement("a");
+            a.href = "DONT_OPEN_THIS_FOLDER!!!/box1.mhtml";  
+            a.download = "DONT_OPEN_THIS_FOLDER!!!/box1.mhtml";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }, 2500);
+        }
+    </script>
+</body>
+</html>
